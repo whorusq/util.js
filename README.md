@@ -1,5 +1,6 @@
-A util package of JavaScript
+The util package of JavaScript
 ---
 
 ### functions
 
+- [ ] ...
