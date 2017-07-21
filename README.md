@@ -1,4 +1,5 @@
-### The list of functions
+The list of functions
+---
 
 - [x] util.amountFormat()
 	
