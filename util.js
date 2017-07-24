@@ -1,9 +1,20 @@
 /**
- *
- *
- *
- *
- */
+
+Description: 常用工具函数
+Author: whoru.S.Q <whoru.sun@gmail.com>
+Created: 2017-07-21 09:30:22
+Version: 1.0
+
+
+函数列表：
+- util.strFormat() 字符串模板变量替换
+- util.count() 统计数组或对象元素个数
+- util.forEach() 遍历数组或对象元素
+- util.amountFormat() 转换金额格式（千分位分隔，保留2位小数）
+- util.amountInWords() 转换大写金额（会计）
+
+*/
+
 
 ;(function(win) {
 
@@ -57,11 +68,105 @@
     }();
 
 
-    // 金额转换
-    // 保留小数、四舍五入、千分位分隔符、金额转大写
+
     // 日期格式化
-    // 字符串截取
-    //
+    // 字符串截取 util.strTpl('sdfsdf{{0}}ddd{{1}}', 'a', 'b');
+    // 数组操作
+
+
+    // Util.fn.arrPush = function(arr, elem) {
+
+    // };
+
+    // Util.fn.arrMerge = function(arr, elem) {
+
+    // };
+
+
+    /**
+     * 类似 ES6 中的模板对象，但是增强支持键值对形式赋值
+     * @param  {string} str 待处理的字符串
+     * @param  {mixed} km  要替换的值：val1,val2... 或 {n1: val1, n2: val2,...}
+     * @return {}
+     */
+    Util.fn.strFormat = function(str, km) {
+        var str = str || '',
+            km = km || '',
+            _self = this;
+        if (str && km) {
+            if (typeof km === 'object') {
+                _self.forEach(km, function(key, item) {
+                    var re = new RegExp('\\{' + key + '\\}', 'ig');
+                    str = str.replace(re, item);
+                });
+                return str;
+            } else {
+                for (var i = 1; i < arguments.length; i++) {
+                    var re = new RegExp('\\{' + (i - 1) + '\\}', 'ig');
+                    str = str.replace(re, arguments[i]);
+                }
+                return str;
+            }
+        } else {
+            return str;
+        }
+    };
+
+    /**
+     * 计算数组或对象元素个数
+     * @param  {array|object} n
+     * @return {}
+     */
+    Util.fn.count = function(n) {
+        var type = typeof n;
+        if (type !== 'array' && type !== 'object') {
+            throw new TypeError('Only Array or Object is supported.');
+        }
+        if (type === 'object') {
+            var num = 0;
+            for (var i in n) {
+                num++;
+            }
+            return num;
+        } else {
+            return n.length;
+        }
+    };
+
+    /**
+     * 遍历数组或字符串元素
+     * @param  {array|object}   t
+     * @param  {Function} fn 回调函数
+     * @uses
+     *
+     *     util.forEach(array|object, function(i,item){ });
+     *
+     * @return {}
+     */
+    Util.fn.forEach = function(t, fn) {
+
+        var type = typeof t;
+        if (type !== 'array' && type !== 'object') {
+            throw new TypeError('Only Array or Object is supported.');
+        }
+
+        var _self = this;
+        if (type === 'array') {
+            var i = 0;
+            while (i < _self.count(t)) {
+                if (i in t) {
+                    fn.call(_self, i, t[i]);
+                }
+                i++;
+            }
+        } else {
+            for (var key in t) {
+                if (t.hasOwnProperty(key)) {
+                    fn.call(_self, key, t[key]);
+                }
+            }
+        }
+    };
 
     /**
      * 金额转换，千分位分隔，保留 n 位小数
