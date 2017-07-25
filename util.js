@@ -118,10 +118,10 @@ Version: 1.0
         };
         function fillZero(str) {
             var str = str.toString();
-            return str.length == 1 ? _self.strFormat('0{0}', str) : str;
+            return str.length == 1 ? '0' + str : str;
         }
         _self.forEach(formatMapping, function(f, v) {
-            var re = new RegExp(_self.strFormat('{0}', f));
+            var re = new RegExp(f.toString());
             format = format.replace(re, v);
         });
         return format.toString();
@@ -129,6 +129,7 @@ Version: 1.0
 
     /**
      * 字符串截取显示
+     * https://tonghuashuo.github.io/blog/substr-and-substring.html（substr/substring区别）
      * @param  {string} str    待截取的字符串
      * @param  {integer} length 截取（显示）长度
      * @param  {boolean} apost  是否显示末尾省略号，false|其它
