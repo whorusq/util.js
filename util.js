@@ -2,14 +2,15 @@
 
 Description: 常用工具函数
 Author: whoru.S.Q <whoru.sun@gmail.com>
+Link: https://github.com/whorusq/util.js
 Created: 2017-07-21 09:30:22
 Version: 1.0
-
 
 函数列表：
 
 - util.date() 日期格式化
 - util.strFormat() 字符串模板变量替换
+- util.strCutting() 字符串截取显示
 - util.count() 统计数组或对象元素个数
 - util.forEach() 遍历数组或对象元素
 - util.amountFormat() 转换金额格式（千分位分隔，保留2位小数）
@@ -26,6 +27,7 @@ Version: 1.0
     var Util = function() {
         this.version = '1.0';
         this.author = 'whoru.S.Q <whoru.sun@gmail.com>';
+        this.link = 'https://github.com/whorusq/util.js';
         this.description = 'A common set of functions for Javascript';
     };
     Util.fn = Util.prototype;
@@ -59,8 +61,6 @@ Version: 1.0
             version: '8.0',
             desc: 'IE 8.0'
         };
-
-
         return {
             agent: agent,
             platform: platform, // 系统平台
@@ -71,6 +71,15 @@ Version: 1.0
 
 
     // 数组操作
+    // Util.fn.arrPush = function(arr, elem) {
+
+    // };
+
+    // Util.fn.arrMerge = function(arr, elem) {
+
+    // };
+
+
 
     /**
      * 日期格式化
@@ -118,15 +127,27 @@ Version: 1.0
         return format.toString();
     };
 
-
-    // Util.fn.arrPush = function(arr, elem) {
-
-    // };
-
-    // Util.fn.arrMerge = function(arr, elem) {
-
-    // };
-
+    /**
+     * 字符串截取显示
+     * @param  {string} str    待截取的字符串
+     * @param  {integer} length 截取（显示）长度
+     * @param  {boolean} apost  是否显示末尾省略号，false|其它
+     * @return {}
+     */
+    Util.fn.strCutting = function(str, length, apost) {
+        if (str) {
+            if (typeof str !== 'string') {
+                throw new TypeError('Format string required');
+            }
+            var finalStr = str.substr(0, length);
+            if (typeof apost === 'undefined' || typeof apost !== 'boolean') {
+                apost = true; // 默认显示尾部省略号
+            }
+            return (str.length > length && apost) ? finalStr + '...' : finalStr;
+        } else {
+            return '';
+        }
+    };
 
     /**
      * 类似 ES6 中的模板对象，但是增强支持键值对形式赋值

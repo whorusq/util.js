@@ -1,14 +1,18 @@
 The list of functions
 ---
 
-- [x] util.Date() 
+- [x] util.date() 
 	
 	> 日期格式化
 	
 - [x] util.strFormat() 
 	
 	> 字符串模板变量替换
+
+- [x] util.strCutting() 
 	
+	> 字符串截取显示
+		
 - [x] util.count() 
 
 	> 统计数组或对象元素个数
