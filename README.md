@@ -1,7 +1,10 @@
 The list of functions
 ---
 
-
+- [x] util.Date() 
+	
+	> 日期格式化
+	
 - [x] util.strFormat() 
 	
 	> 字符串模板变量替换

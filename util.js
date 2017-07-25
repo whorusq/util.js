@@ -7,6 +7,8 @@ Version: 1.0
 
 
 函数列表：
+
+- util.date() 日期格式化
 - util.strFormat() 字符串模板变量替换
 - util.count() 统计数组或对象元素个数
 - util.forEach() 遍历数组或对象元素
@@ -24,7 +26,7 @@ Version: 1.0
     var Util = function() {
         this.version = '1.0';
         this.author = 'whoru.S.Q <whoru.sun@gmail.com>';
-        this.link = '';
+        this.description = 'A common set of functions for Javascript';
     };
     Util.fn = Util.prototype;
 
@@ -68,10 +70,53 @@ Version: 1.0
     }();
 
 
-
-    // 日期格式化
-    // 字符串截取 util.strTpl('sdfsdf{{0}}ddd{{1}}', 'a', 'b');
     // 数组操作
+
+    /**
+     * 日期格式化
+     * @param  {integer|string} dateString 待转换的【时间戳】或【日期时间格式原始字符串】
+     * @param  {string} format     格式模板，默认 Y-M-D H:i:s --> 2017-07-02 13:24:01
+     * @return {string} 格式化后的字符串 或 当前时间对应默认格式的字符串
+     */
+    Util.fn.date = function(dateString, format) {
+        var _self = this;
+        var dateString = dateString || (new Date()).toString();
+        var format = format || 'Y-M-D H:i:s';
+
+        // 参数异常检查
+        if (typeof dateString === 'number') {
+            dateString = parseInt(dateString * 1000); // 时间戳 秒 转 微秒
+        }
+        var oDate = new Date(dateString);
+        if (oDate.toString() == 'Invalid Date' || oDate.getFullYear().toString() == '1970') {
+            throw new TypeError('Invalid timestamp or date string format.');
+        }
+
+        // 格式转换
+        var formatMapping = {
+            'Y': oDate.getFullYear(),                        // 年 2017
+            'y': oDate.getFullYear().toString().substr(2),   // 年 17
+            'M': fillZero(parseInt(oDate.getMonth()) + 1),   // 月 07
+            'm': parseInt(oDate.getMonth()) + 1,             // 月 7
+            'D': fillZero(oDate.getDate()),                  // 日 02
+            'd': oDate.getDate(),                            // 日 2
+            'H': oDate.getHours(),                           // 时 24
+            // 'h': oDate.getHours(),                           // 时 12
+            'I': fillZero(oDate.getMinutes()),               // 分 01
+            'i': oDate.getMinutes(),                         // 分 1
+            'S': fillZero(oDate.getSeconds()),               // 秒 03
+            's': oDate.getSeconds()                          // 秒 3
+        };
+        function fillZero(str) {
+            var str = str.toString();
+            return str.length == 1 ? _self.strFormat('0{0}', str) : str;
+        }
+        _self.forEach(formatMapping, function(f, v) {
+            var re = new RegExp(_self.strFormat('{0}', f));
+            format = format.replace(re, v);
+        });
+        return format.toString();
+    };
 
 
     // Util.fn.arrPush = function(arr, elem) {
