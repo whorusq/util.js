@@ -71,6 +71,7 @@ Version: 1.0
 
     /**
      * 获取一个随机整数
+     *
      * @param  {integer} min 最小
      * @param  {integer} max 最大
      *
@@ -92,6 +93,23 @@ Version: 1.0
         return Math.floor(Math.random() * (max - min + 1) + min);
     };
 
+    /**
+     * 生成 uuid
+     *
+     * @uses
+     *
+     *      util.uuid; // 返回如："41bd8697-1eec-44d6-f3dd-e32795e92088"
+     *
+     * @return {string}
+     */
+    Util.fn.uuid = function() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+            var d = new Date().getTime();
+            var r = (d + Math.random() * 16) % 16 | 0;
+            d = Math.floor(d / 16);
+            return (c == 'x' ? r : (r&0x7|0x8)).toString(16);
+        });
+    }();
 
     // 数组操作
     // Util.fn.arrPush = function(arr, elem) {

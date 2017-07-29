@@ -4,7 +4,11 @@ The list of functions
 - [x] util.random() 
 	
 	> 获取一个随机整数
-
+	
+- [x] util.uuid 
+	
+	> 生成 uuid
+	
 - [x] util.date() 
 	
 	> 日期格式化
