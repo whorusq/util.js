@@ -69,6 +69,29 @@ Version: 1.0
         };
     }();
 
+    /**
+     * 获取一个随机整数
+     * @param  {integer} min 最小
+     * @param  {integer} max 最大
+     *
+     * @uses
+     *
+     *      util.random(); // 1 到 100 之间的随机数
+     *      util.random(5); // 一个 5 位的随机数
+     *      util.random(10, 50); // 10 到 50 之间的随机数
+     *
+     * @return {integer}
+     */
+    Util.fn.random = function(min, max) {
+        var min = min || 1,
+            max  =max || 100;
+        if (arguments.length == 1) {
+            min = Math.pow(10, parseInt(arguments[0]) - 1);
+            max = Math.pow(10, parseInt(arguments[0])) - 1;
+        }
+        return Math.floor(Math.random() * (max - min + 1) + min);
+    };
+
 
     // 数组操作
     // Util.fn.arrPush = function(arr, elem) {
