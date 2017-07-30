@@ -1,7 +1,7 @@
 /**
 
 Description: 常用工具函数
-Author: whoru.S.Q <whoru.sun@gmail.com>
+Author: whoru.S.Q <whorusq@gmail.com>
 Link: https://github.com/whorusq/util.js
 Created: 2017-07-21 09:30:22
 Version: 1.0
