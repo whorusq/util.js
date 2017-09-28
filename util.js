@@ -34,21 +34,7 @@ Version: 1.0
     Util.fn = Util.prototype;
 
     // 公用辅助
-    var doc = document;
-
-
-    Util.fn.log = {
-        error: function(msg){
-            win.console && console.error && console.error('Error: ' + msg);
-        },
-        warn: function(msg){
-            win.console && console.warn && console.warn('Warn: ' + msg);
-        },
-        info: function(msg){
-            win.console && console.info && console.info('Info: ' + msg);
-        }
-    };
-
+    var doc = win.document;
 
     // 客户端浏览器设备参数
     Util.fn.browser = function() {
@@ -416,7 +402,7 @@ Version: 1.0
     //
     if (!(typeof util === 'undefined' && (win.util = new Util))) {
         win.utools = new Util();
-        log.warn('`util` had used, please use `utools` instead.');
+        throw '`util` had used, please use `utools` instead.';
     }
 
 }(window));
