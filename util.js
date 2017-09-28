@@ -1,7 +1,7 @@
 /**
 
 Description: 常用工具函数
-Author: whoru.S.Q <whorusq@gmail.com>
+Author: whoru.S.Q <whorusq at gmail.com>
 Link: https://github.com/whorusq/util.js
 Created: 2017-07-21 09:30:22
 Version: 1.0
@@ -13,8 +13,9 @@ Version: 1.0
 - util.strCutting() 字符串截取显示
 - util.count() 统计数组或对象元素个数
 - util.forEach() 遍历数组或对象元素
-- util.amountFormat() 转换金额格式（千分位分隔，保留2位小数）
+- util.amountFormat() 转换金额格式（千分位分隔，默认保留2位小数）
 - util.amountInWords() 转换大写金额（会计）
+- util.handlePageBack() 监听、处理浏览器（PC、Android、iOS）单击“返回“按钮操作
 
 */
 
@@ -121,6 +122,10 @@ Version: 1.0
     // };
 
 
+
+    Util.fn.isNaN = function(param) {
+        return param !== param ? true : false;
+    };
 
     /**
      * 日期格式化
@@ -357,7 +362,56 @@ Version: 1.0
             s.replace(/(零.)*零元/, '元').replace(/(零.)+/g, '零').replace(/^整$/, '零元整');
     };
 
+    /**
+     * 监听、处理单击“返回“按钮操作
+     * @param  {string|function} oArg 返回的地址；或单击返回时，一个处理函数
+     * @uses
+     *
+     *      // 直接传要返回的地址
+     *      util.handlePageBack('{: U("Demo/page1")}');
+     *
+     *      // 传递一个函数，做更多处理
+     *      util.handlePageBack(function() {
+     *
+     *      });
+     *
+     * @return {}
+     */
+    Util.fn.handlePageBack = function(oArg) {
 
+        // 参数检查
+        var sArgType = typeof oArg;
+        if (sArgType != 'string' && sArgType != 'function') {
+            throw 'parameter type, string or function is needed.';
+            return false;
+        }
+
+        var bool = false;
+        var pushHistory = function() {
+            var state = {
+                title: 'title',
+                url: '#'
+            };
+            window.history.pushState(state, 'title', '#');
+        };
+
+        pushHistory();
+        setTimeout(function(){
+            bool = true;
+        }, 1500);
+        window.addEventListener('popstate', function(e) {
+            if (bool) {
+                if (sArgType == 'string') {
+                    location.href = oArg;
+                } else {
+                    oArg();
+                }
+                // alert('返回 page0');//根据自己的需求实现自己的功能
+                // location.href = '{: U("Demo/page0")}';
+            }
+            pushHistory();
+        }, false);
+    };
 
     //
     if (!(typeof util === 'undefined' && (win.util = new Util))) {
